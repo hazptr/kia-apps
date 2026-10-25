@@ -1,15 +1,15 @@
 {
   "format": 1,
-  "sequence": 3,
-  "generated": "2026-10-25T23:34:34Z",
-  "expires": "2027-01-23T23:34:34Z",
+  "sequence": 4,
+  "generated": "2026-10-25T23:37:37Z",
+  "expires": "2027-01-23T23:37:37Z",
   "key_id": "kia-apps-2026a",
   "apps": [
     {
       "id": "kia.menu",
       "name": "Edit Menu",
-      "summary": "Hide and reorder every All Menus entry, Kia's own included",
-      "description": "A launcher-style grid for Kia's All Menus: drag to reorder, tap the cross to hide, \"Add apps\" to bring entries back. It needs the kia-menu launcher hook, which is built from your own car's stock launcher and installed separately (see the homepage); without the hook, Edit Menu has nothing to edit.",
+      "summary": "Hide and reorder your All Menus",
+      "description": "Choose which apps show up in All Menus, and in what order.",
       "author": "hazptr",
       "homepage": "https://github.com/hazptr/kia-menu",
       "category": "tools",
@@ -49,8 +49,8 @@
     {
       "id": "kia.store",
       "name": "App Store",
-      "summary": "Install, update and remove apps from this index, on the car",
-      "description": "Browse and install NEMESIS packages from the signed kia-apps index. Every download is checked against the index's SHA-256, and the index itself must be signed by a pinned key, newer than the last one seen and not expired. Before installing it says in plain words what a package does. Installs run through a small root helper. The App Store shows up in All Menus with the kia-menu launcher hook installed.",
+      "summary": "Get more apps for your car",
+      "description": "Install, update and remove apps for your car.",
       "author": "hazptr",
       "homepage": "https://github.com/hazptr/kia-store",
       "category": "tools",
@@ -99,8 +99,8 @@
     {
       "id": "kia.tweaks",
       "name": "Tweaks",
-      "summary": "Switchable fixes and tweaks: automatic daylight saving, skip the start-up screen, wireless Android Auto fixes",
-      "description": "One app with an on/off switch per tweak. Automatic daylight saving time flips Kia's own setting on the US/Canada schedule. Skip start-up screen goes straight to the home screen without the consent / driver screen (it changes SystemUI on /system, rebuilt on the car from its own stock files, backed up first and restored exactly when switched off; needs a restart). Recover stuck wireless Android Auto restarts Kia's receiver when it gets stuck after the car's hotspot was used. Keep wireless projection working with ADB TCP stops the Engineering Mode ADB TCP switch from breaking wireless Android Auto and CarPlay. The Tweaks app shows up in All Menus with the kia-menu launcher hook installed.",
+      "summary": "Small fixes, each with an on/off switch",
+      "description": "Turn on fixes like automatic daylight saving time and skipping the start-up screen.",
       "author": "hazptr",
       "homepage": "https://github.com/hazptr/kia-tweaks",
       "category": "fixes",
