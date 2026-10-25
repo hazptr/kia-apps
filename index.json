@@ -1,8 +1,8 @@
 {
   "format": 1,
-  "sequence": 2,
-  "generated": "2026-10-25T23:30:46Z",
-  "expires": "2027-01-23T23:30:46Z",
+  "sequence": 3,
+  "generated": "2026-10-25T23:34:34Z",
+  "expires": "2027-01-23T23:34:34Z",
   "key_id": "kia-apps-2026a",
   "apps": [
     {
@@ -13,6 +13,10 @@
       "author": "hazptr",
       "homepage": "https://github.com/hazptr/kia-menu",
       "category": "tools",
+      "icon": {
+        "url": "https://hazptr.github.io/kia-apps/icons/kia.menu.png",
+        "sha256": "eccfdcacc1dfe5608f2d261e0d6f34bdd3397e99772039ad22dedaa22317a2bd"
+      },
       "versions": [
         {
           "version": "1.1",
@@ -25,19 +29,19 @@
           "requires": [],
           "notes": "First release in the store.",
           "review": {
-            "types": [
-              "application"
-            ],
             "apps": [
               {
                 "package": "dev.kiamenu.editor",
                 "version_code": 6
               }
             ],
-            "services": [],
+            "execute": false,
             "root_services": [],
+            "services": [],
             "system_writes": false,
-            "execute": false
+            "types": [
+              "application"
+            ]
           }
         }
       ]
@@ -50,6 +54,10 @@
       "author": "hazptr",
       "homepage": "https://github.com/hazptr/kia-store",
       "category": "tools",
+      "icon": {
+        "url": "https://hazptr.github.io/kia-apps/icons/kia.store.png",
+        "sha256": "edb03473a7a8d47d0012fb7f94dc76b62488169a7a89b7700db183b03ccac999"
+      },
       "versions": [
         {
           "version": "1.0",
@@ -62,28 +70,28 @@
           "requires": [],
           "notes": "First release.",
           "review": {
-            "types": [
-              "application",
-              "service"
-            ],
             "apps": [
               {
                 "package": "dev.kiastore",
                 "version_code": 1
               }
             ],
-            "services": [
-              {
-                "name": "helper",
-                "uid": "root",
-                "mode": "restart"
-              }
-            ],
+            "execute": false,
             "root_services": [
               "helper"
             ],
+            "services": [
+              {
+                "mode": "restart",
+                "name": "helper",
+                "uid": "root"
+              }
+            ],
             "system_writes": false,
-            "execute": false
+            "types": [
+              "application",
+              "service"
+            ]
           }
         }
       ]
@@ -96,6 +104,10 @@
       "author": "hazptr",
       "homepage": "https://github.com/hazptr/kia-tweaks",
       "category": "fixes",
+      "icon": {
+        "url": "https://hazptr.github.io/kia-apps/icons/kia.tweaks.png",
+        "sha256": "73380e186ba2b1dabedb745adfb09c89685453af25ff5b0da33feb1ed491296f"
+      },
       "versions": [
         {
           "version": "1.0",
@@ -108,28 +120,28 @@
           "requires": [],
           "notes": "First release: replaces ev6.fixes (eth0 guard and Android Auto recovery are now tweaks).",
           "review": {
-            "types": [
-              "application",
-              "service"
-            ],
             "apps": [
               {
                 "package": "dev.kiatweaks",
                 "version_code": 1
               }
             ],
-            "services": [
-              {
-                "name": "tweaksd",
-                "uid": "root",
-                "mode": "restart"
-              }
-            ],
+            "execute": false,
             "root_services": [
               "tweaksd"
             ],
+            "services": [
+              {
+                "mode": "restart",
+                "name": "tweaksd",
+                "uid": "root"
+              }
+            ],
             "system_writes": true,
-            "execute": false
+            "types": [
+              "application",
+              "service"
+            ]
           }
         }
       ]
