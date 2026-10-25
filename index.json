@@ -1,8 +1,138 @@
 {
   "format": 1,
-  "sequence": 1,
-  "generated": "2026-10-25T23:27:35Z",
-  "expires": "2027-01-23T23:27:35Z",
+  "sequence": 2,
+  "generated": "2026-10-25T23:30:46Z",
+  "expires": "2027-01-23T23:30:46Z",
   "key_id": "kia-apps-2026a",
-  "apps": []
+  "apps": [
+    {
+      "id": "kia.menu",
+      "name": "Edit Menu",
+      "summary": "Hide and reorder every All Menus entry, Kia's own included",
+      "description": "A launcher-style grid for Kia's All Menus: drag to reorder, tap the cross to hide, \"Add apps\" to bring entries back. It needs the kia-menu launcher hook, which is built from your own car's stock launcher and installed separately (see the homepage); without the hook, Edit Menu has nothing to edit.",
+      "author": "hazptr",
+      "homepage": "https://github.com/hazptr/kia-menu",
+      "category": "tools",
+      "versions": [
+        {
+          "version": "1.1",
+          "url": "https://github.com/hazptr/kia-menu/releases/download/v1.1/kia.menu-v1.1.zip",
+          "sha256": "85df8fb94fd7fb614d4178b03726469fe506ddde29a2f101f68aa2b1351ec9ed",
+          "size": 25948,
+          "firmware": [
+            "*"
+          ],
+          "requires": [],
+          "notes": "First release in the store.",
+          "review": {
+            "types": [
+              "application"
+            ],
+            "apps": [
+              {
+                "package": "dev.kiamenu.editor",
+                "version_code": 6
+              }
+            ],
+            "services": [],
+            "root_services": [],
+            "system_writes": false,
+            "execute": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "kia.store",
+      "name": "App Store",
+      "summary": "Install, update and remove apps from this index, on the car",
+      "description": "Browse and install NEMESIS packages from the signed kia-apps index. Every download is checked against the index's SHA-256, and the index itself must be signed by a pinned key, newer than the last one seen and not expired. Before installing it says in plain words what a package does. Installs run through a small root helper. The App Store shows up in All Menus with the kia-menu launcher hook installed.",
+      "author": "hazptr",
+      "homepage": "https://github.com/hazptr/kia-store",
+      "category": "tools",
+      "versions": [
+        {
+          "version": "1.0",
+          "url": "https://github.com/hazptr/kia-store/releases/download/v1.0/kia.store-v1.0.zip",
+          "sha256": "6d9e34b3d292f04b378fc3fe7d00a133092143c93c18cacbcfc2edb679657cfb",
+          "size": 75623,
+          "firmware": [
+            "*"
+          ],
+          "requires": [],
+          "notes": "First release.",
+          "review": {
+            "types": [
+              "application",
+              "service"
+            ],
+            "apps": [
+              {
+                "package": "dev.kiastore",
+                "version_code": 1
+              }
+            ],
+            "services": [
+              {
+                "name": "helper",
+                "uid": "root",
+                "mode": "restart"
+              }
+            ],
+            "root_services": [
+              "helper"
+            ],
+            "system_writes": false,
+            "execute": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "kia.tweaks",
+      "name": "Tweaks",
+      "summary": "Switchable fixes and tweaks: automatic daylight saving, skip the start-up screen, wireless Android Auto fixes",
+      "description": "One app with an on/off switch per tweak. Automatic daylight saving time flips Kia's own setting on the US/Canada schedule. Skip start-up screen goes straight to the home screen without the consent / driver screen (it changes SystemUI on /system, rebuilt on the car from its own stock files, backed up first and restored exactly when switched off; needs a restart). Recover stuck wireless Android Auto restarts Kia's receiver when it gets stuck after the car's hotspot was used. Keep wireless projection working with ADB TCP stops the Engineering Mode ADB TCP switch from breaking wireless Android Auto and CarPlay. The Tweaks app shows up in All Menus with the kia-menu launcher hook installed.",
+      "author": "hazptr",
+      "homepage": "https://github.com/hazptr/kia-tweaks",
+      "category": "fixes",
+      "versions": [
+        {
+          "version": "1.0",
+          "url": "https://github.com/hazptr/kia-tweaks/releases/download/v1.0/kia.tweaks-v1.0.zip",
+          "sha256": "e872472729fdb7b1501619d7814131371c6715264e3079fac26a325fc3411686",
+          "size": 162457,
+          "firmware": [
+            "CVEV.USA.0000.V015.012.260507"
+          ],
+          "requires": [],
+          "notes": "First release: replaces ev6.fixes (eth0 guard and Android Auto recovery are now tweaks).",
+          "review": {
+            "types": [
+              "application",
+              "service"
+            ],
+            "apps": [
+              {
+                "package": "dev.kiatweaks",
+                "version_code": 1
+              }
+            ],
+            "services": [
+              {
+                "name": "tweaksd",
+                "uid": "root",
+                "mode": "restart"
+              }
+            ],
+            "root_services": [
+              "tweaksd"
+            ],
+            "system_writes": true,
+            "execute": false
+          }
+        }
+      ]
+    }
+  ]
 }

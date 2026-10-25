@@ -1,0 +1,149 @@
+{
+ "flags": [
+  {
+   "file": "tweaks/auto-dst/run.sh",
+   "line": 61,
+   "rules": [
+    "settings"
+   ],
+   "text": "settings put system summer_time \"$want\""
+  },
+  {
+   "file": "tweaks/aa-recover/run.sh",
+   "line": 29,
+   "rules": [
+    "as-uid",
+    "kill"
+   ],
+   "text": "/system/xbin/nemesis root 1000 -c \"kill $1\" >/dev/null 2>&1"
+  },
+  {
+   "file": "tweaks/eth0-guard/run.sh",
+   "line": 28,
+   "rules": [
+    "setprop"
+   ],
+   "text": "setprop ctl.start \"set_adb_ip:netmask 255.255.255.255\""
+  },
+  {
+   "file": "tweaks/skip-consent/enable.sh",
+   "line": 31,
+   "rules": [
+    "remount"
+   ],
+   "text": "/system/xbin/nemesis remount rw >/dev/null 2>&1 || fail \"remount rw\""
+  },
+  {
+   "file": "tweaks/skip-consent/enable.sh",
+   "line": 33,
+   "rules": [
+    "perms-unknown"
+   ],
+   "text": "chmod 644 $APP/SystemUI.apk.new"
+  },
+  {
+   "file": "tweaks/skip-consent/enable.sh",
+   "line": 37,
+   "rules": [
+    "perms-unknown"
+   ],
+   "text": "chmod 644 $APP/SystemUI.odex"
+  },
+  {
+   "file": "tweaks/skip-consent/enable.sh",
+   "line": 43,
+   "rules": [
+    "remount"
+   ],
+   "text": "/system/xbin/nemesis remount ro >/dev/null 2>&1"
+  },
+  {
+   "file": "tweaks/skip-consent/disable.sh",
+   "line": 9,
+   "rules": [
+    "remount"
+   ],
+   "text": "/system/xbin/nemesis remount rw >/dev/null 2>&1 || fail \"remount rw\""
+  },
+  {
+   "file": "tweaks/skip-consent/disable.sh",
+   "line": 11,
+   "rules": [
+    "perms-unknown"
+   ],
+   "text": "chmod 644 $APP/SystemUI.apk.new $APP/SystemUI.odex.new"
+  },
+  {
+   "file": "tweaks/skip-consent/disable.sh",
+   "line": 13,
+   "rules": [
+    "system-path"
+   ],
+   "text": "rm -f /data/dalvik-cache/*SystemUI* 2>/dev/null"
+  },
+  {
+   "file": "tweaks/skip-consent/disable.sh",
+   "line": 15,
+   "rules": [
+    "remount"
+   ],
+   "text": "/system/xbin/nemesis remount ro >/dev/null 2>&1"
+  },
+  {
+   "file": "tweaks/skip-consent/common.sh",
+   "line": 22,
+   "rules": [
+    "remount"
+   ],
+   "text": "fail() { echo \"FAIL: $1\"; /system/xbin/nemesis remount ro >/dev/null 2>&1; rm -rf $WORK; exit 1; }"
+  },
+  {
+   "file": "svc/tweaksd.sh",
+   "line": 123,
+   "rules": [
+    "kill"
+   ],
+   "text": "kill \"$1\" 2>/dev/null"
+  },
+  {
+   "file": "svc/tweaksd.sh",
+   "line": 302,
+   "rules": [
+    "as-uid"
+   ],
+   "text": "nemesis root 2000 -c \"mkdir -p $SD && cp $DATA/state.json $SD/state.json.tmp && mv $SD/state.json.tmp $SD/state.json\" \\"
+  }
+ ],
+ "nemesis": {
+  "id": "kia.tweaks",
+  "version": "1.0"
+ },
+ "review": {
+  "apps": [
+   {
+    "package": "dev.kiatweaks",
+    "version_code": 1
+   }
+  ],
+  "execute": false,
+  "root_services": [
+   "tweaksd"
+  ],
+  "services": [
+   {
+    "mode": "restart",
+    "name": "tweaksd",
+    "uid": "root"
+   }
+  ],
+  "system_writes": true,
+  "types": [
+   "application",
+   "service"
+  ]
+ },
+ "sha256": "e872472729fdb7b1501619d7814131371c6715264e3079fac26a325fc3411686",
+ "size": 162457,
+ "tool": 1,
+ "warnings": []
+}
