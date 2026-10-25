@@ -1,0 +1,35 @@
+{
+ "flags": [],
+ "nemesis": {
+  "id": "kia.store",
+  "version": "1.0"
+ },
+ "review": {
+  "apps": [
+   {
+    "package": "dev.kiastore",
+    "version_code": 1
+   }
+  ],
+  "execute": false,
+  "root_services": [
+   "helper"
+  ],
+  "services": [
+   {
+    "mode": "restart",
+    "name": "helper",
+    "uid": "root"
+   }
+  ],
+  "system_writes": false,
+  "types": [
+   "application",
+   "service"
+  ]
+ },
+ "sha256": "037c2b35fd7ca5f10032fc6bc635c4e8215692cebd03603a272026849297312f",
+ "size": 75623,
+ "tool": 1,
+ "warnings": []
+}

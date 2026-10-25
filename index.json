@@ -1,8 +1,8 @@
 {
   "format": 1,
-  "sequence": 7,
-  "generated": "2026-10-25T23:51:14Z",
-  "expires": "2027-01-23T23:51:14Z",
+  "sequence": 8,
+  "generated": "2026-10-25T23:53:41Z",
+  "expires": "2027-01-23T23:53:41Z",
   "key_id": "kia-apps-2026a",
   "apps": [
     {
@@ -21,7 +21,7 @@
         {
           "version": "1.1",
           "url": "https://github.com/hazptr/kia-menu/releases/download/v1.1/kia.menu-v1.1.zip",
-          "sha256": "85df8fb94fd7fb614d4178b03726469fe506ddde29a2f101f68aa2b1351ec9ed",
+          "sha256": "bcefd8d657a5d16da6fb4680ab3a447bc12fff966947d16bf93495cf092a2b63",
           "size": 25948,
           "firmware": [
             "*"
@@ -29,19 +29,19 @@
           "requires": [],
           "notes": "First release in the store.",
           "review": {
+            "types": [
+              "application"
+            ],
             "apps": [
               {
                 "package": "dev.kiamenu.editor",
                 "version_code": 6
               }
             ],
-            "execute": false,
-            "root_services": [],
             "services": [],
+            "root_services": [],
             "system_writes": false,
-            "types": [
-              "application"
-            ]
+            "execute": false
           }
         }
       ]
@@ -62,7 +62,7 @@
         {
           "version": "1.0",
           "url": "https://github.com/hazptr/kia-store/releases/download/v1.0/kia.store-v1.0.zip",
-          "sha256": "6d9e34b3d292f04b378fc3fe7d00a133092143c93c18cacbcfc2edb679657cfb",
+          "sha256": "037c2b35fd7ca5f10032fc6bc635c4e8215692cebd03603a272026849297312f",
           "size": 75623,
           "firmware": [
             "*"
@@ -70,28 +70,28 @@
           "requires": [],
           "notes": "First release.",
           "review": {
+            "types": [
+              "application",
+              "service"
+            ],
             "apps": [
               {
                 "package": "dev.kiastore",
                 "version_code": 1
               }
             ],
-            "execute": false,
+            "services": [
+              {
+                "name": "helper",
+                "uid": "root",
+                "mode": "restart"
+              }
+            ],
             "root_services": [
               "helper"
             ],
-            "services": [
-              {
-                "mode": "restart",
-                "name": "helper",
-                "uid": "root"
-              }
-            ],
             "system_writes": false,
-            "types": [
-              "application",
-              "service"
-            ]
+            "execute": false
           }
         }
       ]
@@ -110,9 +110,44 @@
       },
       "versions": [
         {
+          "version": "1.1",
+          "url": "https://github.com/hazptr/kia-tweaks/releases/download/v1.1/kia.tweaks-v1.1.zip",
+          "sha256": "2da24d3437ebc28bb45813aae1cd07ce1ffc9fb91fe4b095ad145031f73e7340",
+          "size": 161759,
+          "firmware": [
+            "CVEV.USA.0000.V015.012.260507"
+          ],
+          "requires": [],
+          "notes": "Simpler descriptions for every tweak.",
+          "review": {
+            "types": [
+              "application",
+              "service"
+            ],
+            "apps": [
+              {
+                "package": "dev.kiatweaks",
+                "version_code": 1
+              }
+            ],
+            "services": [
+              {
+                "name": "tweaksd",
+                "uid": "root",
+                "mode": "restart"
+              }
+            ],
+            "root_services": [
+              "tweaksd"
+            ],
+            "system_writes": true,
+            "execute": false
+          }
+        },
+        {
           "version": "1.0",
           "url": "https://github.com/hazptr/kia-tweaks/releases/download/v1.0/kia.tweaks-v1.0.zip",
-          "sha256": "e872472729fdb7b1501619d7814131371c6715264e3079fac26a325fc3411686",
+          "sha256": "c57082a4dec8203c3f8953ab12a253e100c4964e99561ffe3c7e1c0e91ec13c1",
           "size": 162457,
           "firmware": [
             "CVEV.USA.0000.V015.012.260507"
@@ -120,28 +155,28 @@
           "requires": [],
           "notes": "First release: replaces ev6.fixes (eth0 guard and Android Auto recovery are now tweaks).",
           "review": {
+            "types": [
+              "application",
+              "service"
+            ],
             "apps": [
               {
                 "package": "dev.kiatweaks",
                 "version_code": 1
               }
             ],
-            "execute": false,
+            "services": [
+              {
+                "name": "tweaksd",
+                "uid": "root",
+                "mode": "restart"
+              }
+            ],
             "root_services": [
               "tweaksd"
             ],
-            "services": [
-              {
-                "mode": "restart",
-                "name": "tweaksd",
-                "uid": "root"
-              }
-            ],
             "system_writes": true,
-            "types": [
-              "application",
-              "service"
-            ]
+            "execute": false
           }
         }
       ]
