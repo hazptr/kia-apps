@@ -1,15 +1,15 @@
 {
   "format": 1,
-  "sequence": 4,
-  "generated": "2026-10-25T23:37:37Z",
-  "expires": "2027-01-23T23:37:37Z",
+  "sequence": 5,
+  "generated": "2026-10-25T23:39:29Z",
+  "expires": "2027-01-23T23:39:29Z",
   "key_id": "kia-apps-2026a",
   "apps": [
     {
       "id": "kia.menu",
       "name": "Edit Menu",
-      "summary": "Hide and reorder your All Menus",
-      "description": "Choose which apps show up in All Menus, and in what order.",
+      "summary": "Hide and reorder your home screen icons",
+      "description": "Choose which icons show up on your home screen, and in what order.",
       "author": "hazptr",
       "homepage": "https://github.com/hazptr/kia-menu",
       "category": "tools",
