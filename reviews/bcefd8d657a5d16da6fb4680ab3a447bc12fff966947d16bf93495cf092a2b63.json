@@ -12,15 +12,19 @@
    }
   ],
   "execute": false,
+  "hooks": [],
+  "root": [],
   "root_services": [],
   "services": [],
+  "sh_entries": [],
   "system_writes": false,
+  "tweaks": [],
   "types": [
    "application"
   ]
  },
  "sha256": "bcefd8d657a5d16da6fb4680ab3a447bc12fff966947d16bf93495cf092a2b63",
  "size": 25948,
- "tool": 1,
+ "tool": 2,
  "warnings": []
 }

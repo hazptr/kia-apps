@@ -126,6 +126,14 @@
    }
   ],
   "execute": false,
+  "hooks": [],
+  "root": [
+   "service tweaksd",
+   "tweak aa-recover (through Tweaks)",
+   "tweak auto-dst (through Tweaks)",
+   "tweak eth0-guard (through Tweaks)",
+   "tweak skip-consent (through Tweaks)"
+  ],
   "root_services": [
    "tweaksd"
   ],
@@ -136,7 +144,38 @@
     "uid": "root"
    }
   ],
+  "sh_entries": [],
   "system_writes": true,
+  "tweaks": [
+   {
+    "id": "aa-recover",
+    "kind": "service",
+    "name": "Fix wireless Android Auto not connecting",
+    "retired": false,
+    "risk": "normal"
+   },
+   {
+    "id": "auto-dst",
+    "kind": "service",
+    "name": "Automatic daylight saving time",
+    "retired": false,
+    "risk": "normal"
+   },
+   {
+    "id": "eth0-guard",
+    "kind": "service",
+    "name": "Wireless projection with ADB TCP",
+    "retired": false,
+    "risk": "normal"
+   },
+   {
+    "id": "skip-consent",
+    "kind": "oneshot",
+    "name": "Skip start-up screen",
+    "retired": false,
+    "risk": "system"
+   }
+  ],
   "types": [
    "application",
    "service"
@@ -144,6 +183,6 @@
  },
  "sha256": "2da24d3437ebc28bb45813aae1cd07ce1ffc9fb91fe4b095ad145031f73e7340",
  "size": 161759,
- "tool": 1,
+ "tool": 2,
  "warnings": []
 }

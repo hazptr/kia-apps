@@ -12,6 +12,10 @@
    }
   ],
   "execute": false,
+  "hooks": [],
+  "root": [
+   "service helper"
+  ],
   "root_services": [
    "helper"
   ],
@@ -22,7 +26,9 @@
     "uid": "root"
    }
   ],
+  "sh_entries": [],
   "system_writes": false,
+  "tweaks": [],
   "types": [
    "application",
    "service"
@@ -30,6 +36,6 @@
  },
  "sha256": "44a34631997138b1ae48fb94b9df91b29f6a8e351b064db4407fc39c26a6ae06",
  "size": 85702,
- "tool": 1,
+ "tool": 2,
  "warnings": []
 }

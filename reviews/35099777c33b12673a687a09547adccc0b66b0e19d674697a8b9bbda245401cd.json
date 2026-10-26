@@ -120,15 +120,29 @@
  "review": {
   "apps": [],
   "execute": false,
+  "hooks": [],
+  "root": [
+   "tweak adb-wifi (through Tweaks)"
+  ],
   "root_services": [],
   "services": [],
+  "sh_entries": [],
   "system_writes": true,
+  "tweaks": [
+   {
+    "id": "adb-wifi",
+    "kind": "oneshot",
+    "name": "ADB over Wi-Fi",
+    "retired": false,
+    "risk": "system"
+   }
+  ],
   "types": [
    "application"
   ]
  },
  "sha256": "35099777c33b12673a687a09547adccc0b66b0e19d674697a8b9bbda245401cd",
  "size": 6698,
- "tool": 1,
+ "tool": 2,
  "warnings": []
 }

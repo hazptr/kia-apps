@@ -145,15 +145,53 @@
  "review": {
   "apps": [],
   "execute": false,
+  "hooks": [],
+  "root": [
+   "tweak aa-reconnect (through Tweaks)",
+   "tweak adb-tcp-hotspot (through Tweaks)",
+   "tweak cluster-directions (through Tweaks)",
+   "tweak wireless-projection (through Tweaks)"
+  ],
   "root_services": [],
   "services": [],
+  "sh_entries": [],
   "system_writes": true,
+  "tweaks": [
+   {
+    "id": "aa-reconnect",
+    "kind": "service",
+    "name": "Reconnect wireless Android Auto",
+    "retired": false,
+    "risk": "normal"
+   },
+   {
+    "id": "adb-tcp-hotspot",
+    "kind": "oneshot",
+    "name": "ADB TCP and wireless projection together",
+    "retired": false,
+    "risk": "system"
+   },
+   {
+    "id": "cluster-directions",
+    "kind": "oneshot",
+    "name": "Navigation directions in the instrument cluster",
+    "retired": false,
+    "risk": "system"
+   },
+   {
+    "id": "wireless-projection",
+    "kind": "oneshot",
+    "name": "Wireless Android Auto and CarPlay",
+    "retired": false,
+    "risk": "system"
+   }
+  ],
   "types": [
    "application"
   ]
  },
  "sha256": "08e33e505e24c0cf4522ad8e8a20ceae41a358584136997afb79bcccc6a38e91",
  "size": 780054,
- "tool": 1,
+ "tool": 2,
  "warnings": []
 }

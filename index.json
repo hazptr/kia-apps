@@ -1,8 +1,8 @@
 {
   "format": 1,
-  "sequence": 14,
-  "generated": "2026-10-26T01:47:35Z",
-  "expires": "2027-01-24T01:47:35Z",
+  "sequence": 15,
+  "generated": "2026-10-26T01:50:26Z",
+  "expires": "2027-01-24T01:50:26Z",
   "key_id": "kia-apps-2026a",
   "apps": [
     {
@@ -29,19 +29,23 @@
           "requires": [],
           "notes": "Fixes Edit Menu closing with an error when you press Back.",
           "review": {
+            "types": [
+              "application"
+            ],
             "apps": [
               {
                 "package": "dev.kiamenu.editor",
                 "version_code": 7
               }
             ],
-            "execute": false,
-            "root_services": [],
             "services": [],
+            "root_services": [],
+            "hooks": [],
+            "sh_entries": [],
+            "tweaks": [],
+            "root": [],
             "system_writes": false,
-            "types": [
-              "application"
-            ]
+            "execute": false
           }
         },
         {
@@ -55,19 +59,23 @@
           "requires": [],
           "notes": "First release in the store.",
           "review": {
+            "types": [
+              "application"
+            ],
             "apps": [
               {
                 "package": "dev.kiamenu.editor",
                 "version_code": 6
               }
             ],
-            "execute": false,
-            "root_services": [],
             "services": [],
+            "root_services": [],
+            "hooks": [],
+            "sh_entries": [],
+            "tweaks": [],
+            "root": [],
             "system_writes": false,
-            "types": [
-              "application"
-            ]
+            "execute": false
           }
         }
       ]
@@ -96,28 +104,34 @@
           "requires": [],
           "notes": "An Updates tab with Update all. Shows apps that are no longer offered. Safer handling of install requests.",
           "review": {
+            "types": [
+              "application",
+              "service"
+            ],
             "apps": [
               {
                 "package": "dev.kiastore",
                 "version_code": 1
               }
             ],
-            "execute": false,
+            "services": [
+              {
+                "name": "helper",
+                "uid": "root",
+                "mode": "restart"
+              }
+            ],
             "root_services": [
               "helper"
             ],
-            "services": [
-              {
-                "mode": "restart",
-                "name": "helper",
-                "uid": "root"
-              }
+            "hooks": [],
+            "sh_entries": [],
+            "tweaks": [],
+            "root": [
+              "service helper"
             ],
             "system_writes": false,
-            "types": [
-              "application",
-              "service"
-            ]
+            "execute": false
           }
         },
         {
@@ -131,28 +145,34 @@
           "requires": [],
           "notes": "First release.",
           "review": {
+            "types": [
+              "application",
+              "service"
+            ],
             "apps": [
               {
                 "package": "dev.kiastore",
                 "version_code": 1
               }
             ],
-            "execute": false,
+            "services": [
+              {
+                "name": "helper",
+                "uid": "root",
+                "mode": "restart"
+              }
+            ],
             "root_services": [
               "helper"
             ],
-            "services": [
-              {
-                "mode": "restart",
-                "name": "helper",
-                "uid": "root"
-              }
+            "hooks": [],
+            "sh_entries": [],
+            "tweaks": [],
+            "root": [
+              "service helper"
             ],
             "system_writes": false,
-            "types": [
-              "application",
-              "service"
-            ]
+            "execute": false
           }
         }
       ]
@@ -201,6 +221,45 @@
             "root_services": [
               "tweaksd"
             ],
+            "hooks": [],
+            "sh_entries": [],
+            "tweaks": [
+              {
+                "id": "aa-recover",
+                "name": "Fix wireless Android Auto not connecting",
+                "kind": "service",
+                "risk": "normal",
+                "retired": true
+              },
+              {
+                "id": "auto-dst",
+                "name": "Automatic daylight saving time",
+                "kind": "service",
+                "risk": "normal",
+                "retired": false
+              },
+              {
+                "id": "eth0-guard",
+                "name": "Wireless projection with ADB TCP",
+                "kind": "service",
+                "risk": "normal",
+                "retired": true
+              },
+              {
+                "id": "skip-consent",
+                "name": "Skip start-up screen",
+                "kind": "oneshot",
+                "risk": "system",
+                "retired": false
+              }
+            ],
+            "root": [
+              "service tweaksd",
+              "tweak aa-recover (through Tweaks)",
+              "tweak auto-dst (through Tweaks)",
+              "tweak eth0-guard (through Tweaks)",
+              "tweak skip-consent (through Tweaks)"
+            ],
             "system_writes": true,
             "execute": false
           }
@@ -216,28 +275,67 @@
           "requires": [],
           "notes": "Supports tweak packs from other apps. Tweaks that are removed or replaced are switched off safely.",
           "review": {
+            "types": [
+              "application",
+              "service"
+            ],
             "apps": [
               {
                 "package": "dev.kiatweaks",
                 "version_code": 1
               }
             ],
-            "execute": false,
+            "services": [
+              {
+                "name": "tweaksd",
+                "uid": "root",
+                "mode": "restart"
+              }
+            ],
             "root_services": [
               "tweaksd"
             ],
-            "services": [
+            "hooks": [],
+            "sh_entries": [],
+            "tweaks": [
               {
-                "mode": "restart",
-                "name": "tweaksd",
-                "uid": "root"
+                "id": "aa-recover",
+                "name": "Fix wireless Android Auto not connecting",
+                "kind": "service",
+                "risk": "normal",
+                "retired": false
+              },
+              {
+                "id": "auto-dst",
+                "name": "Automatic daylight saving time",
+                "kind": "service",
+                "risk": "normal",
+                "retired": false
+              },
+              {
+                "id": "eth0-guard",
+                "name": "Wireless projection with ADB TCP",
+                "kind": "service",
+                "risk": "normal",
+                "retired": false
+              },
+              {
+                "id": "skip-consent",
+                "name": "Skip start-up screen",
+                "kind": "oneshot",
+                "risk": "system",
+                "retired": false
               }
             ],
+            "root": [
+              "service tweaksd",
+              "tweak aa-recover (through Tweaks)",
+              "tweak auto-dst (through Tweaks)",
+              "tweak eth0-guard (through Tweaks)",
+              "tweak skip-consent (through Tweaks)"
+            ],
             "system_writes": true,
-            "types": [
-              "application",
-              "service"
-            ]
+            "execute": false
           }
         },
         {
@@ -251,28 +349,67 @@
           "requires": [],
           "notes": "Simpler descriptions for every tweak.",
           "review": {
+            "types": [
+              "application",
+              "service"
+            ],
             "apps": [
               {
                 "package": "dev.kiatweaks",
                 "version_code": 1
               }
             ],
-            "execute": false,
+            "services": [
+              {
+                "name": "tweaksd",
+                "uid": "root",
+                "mode": "restart"
+              }
+            ],
             "root_services": [
               "tweaksd"
             ],
-            "services": [
+            "hooks": [],
+            "sh_entries": [],
+            "tweaks": [
               {
-                "mode": "restart",
-                "name": "tweaksd",
-                "uid": "root"
+                "id": "aa-recover",
+                "name": "Fix wireless Android Auto not connecting",
+                "kind": "service",
+                "risk": "normal",
+                "retired": false
+              },
+              {
+                "id": "auto-dst",
+                "name": "Automatic daylight saving time",
+                "kind": "service",
+                "risk": "normal",
+                "retired": false
+              },
+              {
+                "id": "eth0-guard",
+                "name": "Wireless projection with ADB TCP",
+                "kind": "service",
+                "risk": "normal",
+                "retired": false
+              },
+              {
+                "id": "skip-consent",
+                "name": "Skip start-up screen",
+                "kind": "oneshot",
+                "risk": "system",
+                "retired": false
               }
             ],
+            "root": [
+              "service tweaksd",
+              "tweak aa-recover (through Tweaks)",
+              "tweak auto-dst (through Tweaks)",
+              "tweak eth0-guard (through Tweaks)",
+              "tweak skip-consent (through Tweaks)"
+            ],
             "system_writes": true,
-            "types": [
-              "application",
-              "service"
-            ]
+            "execute": false
           }
         },
         {
@@ -286,28 +423,67 @@
           "requires": [],
           "notes": "First release: replaces ev6.fixes (eth0 guard and Android Auto recovery are now tweaks).",
           "review": {
+            "types": [
+              "application",
+              "service"
+            ],
             "apps": [
               {
                 "package": "dev.kiatweaks",
                 "version_code": 1
               }
             ],
-            "execute": false,
+            "services": [
+              {
+                "name": "tweaksd",
+                "uid": "root",
+                "mode": "restart"
+              }
+            ],
             "root_services": [
               "tweaksd"
             ],
-            "services": [
+            "hooks": [],
+            "sh_entries": [],
+            "tweaks": [
               {
-                "mode": "restart",
-                "name": "tweaksd",
-                "uid": "root"
+                "id": "aa-recover",
+                "name": "Recover stuck wireless Android Auto",
+                "kind": "service",
+                "risk": "normal",
+                "retired": false
+              },
+              {
+                "id": "auto-dst",
+                "name": "Automatic daylight saving time",
+                "kind": "service",
+                "risk": "normal",
+                "retired": false
+              },
+              {
+                "id": "eth0-guard",
+                "name": "Keep wireless projection working with ADB TCP",
+                "kind": "service",
+                "risk": "normal",
+                "retired": false
+              },
+              {
+                "id": "skip-consent",
+                "name": "Skip start-up screen",
+                "kind": "oneshot",
+                "risk": "system",
+                "retired": false
               }
             ],
+            "root": [
+              "service tweaksd",
+              "tweak aa-recover (through Tweaks)",
+              "tweak auto-dst (through Tweaks)",
+              "tweak eth0-guard (through Tweaks)",
+              "tweak skip-consent (through Tweaks)"
+            ],
             "system_writes": true,
-            "types": [
-              "application",
-              "service"
-            ]
+            "execute": false
           }
         }
       ]
@@ -334,14 +510,28 @@
           ],
           "notes": "First release. Replaces the TCP ADB package.",
           "review": {
-            "apps": [],
-            "execute": false,
-            "root_services": [],
-            "services": [],
-            "system_writes": true,
             "types": [
               "application"
-            ]
+            ],
+            "apps": [],
+            "services": [],
+            "root_services": [],
+            "hooks": [],
+            "sh_entries": [],
+            "tweaks": [
+              {
+                "id": "adb-wifi",
+                "name": "ADB over Wi-Fi",
+                "kind": "oneshot",
+                "risk": "system",
+                "retired": false
+              }
+            ],
+            "root": [
+              "tweak adb-wifi (through Tweaks)"
+            ],
+            "system_writes": true,
+            "execute": false
           }
         }
       ]
@@ -374,6 +564,44 @@
             "apps": [],
             "services": [],
             "root_services": [],
+            "hooks": [],
+            "sh_entries": [],
+            "tweaks": [
+              {
+                "id": "aa-reconnect",
+                "name": "Reconnect wireless Android Auto",
+                "kind": "service",
+                "risk": "normal",
+                "retired": false
+              },
+              {
+                "id": "adb-tcp-hotspot",
+                "name": "ADB TCP and wireless projection together",
+                "kind": "oneshot",
+                "risk": "system",
+                "retired": false
+              },
+              {
+                "id": "cluster-directions",
+                "name": "Navigation directions in the instrument cluster",
+                "kind": "oneshot",
+                "risk": "system",
+                "retired": false
+              },
+              {
+                "id": "wireless-projection",
+                "name": "Wireless Android Auto and CarPlay",
+                "kind": "oneshot",
+                "risk": "system",
+                "retired": false
+              }
+            ],
+            "root": [
+              "tweak aa-reconnect (through Tweaks)",
+              "tweak adb-tcp-hotspot (through Tweaks)",
+              "tweak cluster-directions (through Tweaks)",
+              "tweak wireless-projection (through Tweaks)"
+            ],
             "system_writes": true,
             "execute": false
           }
@@ -391,14 +619,52 @@
           ],
           "notes": "First release. Replaces HMG Leafia Plus's wireless projection package.",
           "review": {
-            "apps": [],
-            "execute": false,
-            "root_services": [],
-            "services": [],
-            "system_writes": true,
             "types": [
               "application"
-            ]
+            ],
+            "apps": [],
+            "services": [],
+            "root_services": [],
+            "hooks": [],
+            "sh_entries": [],
+            "tweaks": [
+              {
+                "id": "aa-reconnect",
+                "name": "Reconnect wireless Android Auto",
+                "kind": "service",
+                "risk": "normal",
+                "retired": false
+              },
+              {
+                "id": "adb-tcp-hotspot",
+                "name": "ADB TCP and wireless projection together",
+                "kind": "oneshot",
+                "risk": "system",
+                "retired": false
+              },
+              {
+                "id": "cluster-directions",
+                "name": "Navigation directions in the instrument cluster",
+                "kind": "oneshot",
+                "risk": "system",
+                "retired": false
+              },
+              {
+                "id": "wireless-projection",
+                "name": "Wireless Android Auto and CarPlay",
+                "kind": "oneshot",
+                "risk": "system",
+                "retired": false
+              }
+            ],
+            "root": [
+              "tweak aa-reconnect (through Tweaks)",
+              "tweak adb-tcp-hotspot (through Tweaks)",
+              "tweak cluster-directions (through Tweaks)",
+              "tweak wireless-projection (through Tweaks)"
+            ],
+            "system_writes": true,
+            "execute": false
           }
         }
       ]
