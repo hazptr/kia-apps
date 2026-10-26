@@ -1,8 +1,8 @@
 {
   "format": 1,
-  "sequence": 13,
-  "generated": "2026-10-26T01:33:14Z",
-  "expires": "2027-01-24T01:33:14Z",
+  "sequence": 14,
+  "generated": "2026-10-26T01:47:35Z",
+  "expires": "2027-01-24T01:47:35Z",
   "key_id": "kia-apps-2026a",
   "apps": [
     {
@@ -171,6 +171,41 @@
       },
       "versions": [
         {
+          "version": "1.3",
+          "url": "https://github.com/hazptr/kia-tweaks/releases/download/v1.3/kia.tweaks-v1.3.zip",
+          "sha256": "b6856435ca6d304457faa3e95e88891ddac03e3e22bcf196682cfc435f0832e5",
+          "size": 165890,
+          "firmware": [
+            "CVEV.USA.0000.V015.012.260507"
+          ],
+          "requires": [],
+          "notes": "Two older Android Auto fixes are retired; the Wireless Android Auto and CarPlay pack does their job now.",
+          "review": {
+            "types": [
+              "application",
+              "service"
+            ],
+            "apps": [
+              {
+                "package": "dev.kiatweaks",
+                "version_code": 4
+              }
+            ],
+            "services": [
+              {
+                "name": "tweaksd",
+                "uid": "root",
+                "mode": "restart"
+              }
+            ],
+            "root_services": [
+              "tweaksd"
+            ],
+            "system_writes": true,
+            "execute": false
+          }
+        },
+        {
           "version": "1.2",
           "url": "https://github.com/hazptr/kia-tweaks/releases/download/v1.2/kia.tweaks-v1.2.zip",
           "sha256": "b88d33e85d427ab2c55c7cbd7530fef7cf7a87cc71d4d7b062699f3df5668bf3",
@@ -299,14 +334,14 @@
           ],
           "notes": "First release. Replaces the TCP ADB package.",
           "review": {
+            "apps": [],
+            "execute": false,
+            "root_services": [],
+            "services": [],
+            "system_writes": true,
             "types": [
               "application"
-            ],
-            "apps": [],
-            "services": [],
-            "root_services": [],
-            "system_writes": true,
-            "execute": false
+            ]
           }
         }
       ]
@@ -320,6 +355,29 @@
       "homepage": "https://github.com/cabinwright/tweaks-projection",
       "category": "projection",
       "versions": [
+        {
+          "version": "1.1",
+          "url": "https://github.com/cabinwright/tweaks-projection/releases/download/v1.1/tweaks.projection-v1.1.zip",
+          "sha256": "3df9e7a830d7ac972c9e25d685873828d5b5549d9ff61ef7d7afaf190c980848",
+          "size": 780068,
+          "firmware": [
+            "CVEV.USA.0000.V015.012.260507"
+          ],
+          "requires": [
+            "kia.tweaks>=1.3"
+          ],
+          "notes": "Takes over the switch of the retired Android Auto fix in Tweaks.",
+          "review": {
+            "types": [
+              "application"
+            ],
+            "apps": [],
+            "services": [],
+            "root_services": [],
+            "system_writes": true,
+            "execute": false
+          }
+        },
         {
           "version": "1.0",
           "url": "https://github.com/cabinwright/tweaks-projection/releases/download/v1.0/tweaks.projection-v1.0.zip",
