@@ -1,0 +1,26 @@
+{
+ "flags": [],
+ "nemesis": {
+  "id": "kia.menu",
+  "version": "1.2"
+ },
+ "review": {
+  "apps": [
+   {
+    "package": "dev.kiamenu.editor",
+    "version_code": 7
+   }
+  ],
+  "execute": false,
+  "root_services": [],
+  "services": [],
+  "system_writes": false,
+  "types": [
+   "application"
+  ]
+ },
+ "sha256": "73ee1029e50e2d228a07543b158776f13d956765ee687b19e84a5d22a090e146",
+ "size": 26983,
+ "tool": 1,
+ "warnings": []
+}

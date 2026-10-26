@@ -1,8 +1,8 @@
 {
   "format": 1,
-  "sequence": 11,
-  "generated": "2026-10-26T01:23:03Z",
-  "expires": "2027-01-24T01:23:03Z",
+  "sequence": 12,
+  "generated": "2026-10-26T01:27:41Z",
+  "expires": "2027-01-24T01:27:41Z",
   "key_id": "kia-apps-2026a",
   "apps": [
     {
@@ -18,6 +18,32 @@
         "sha256": "eccfdcacc1dfe5608f2d261e0d6f34bdd3397e99772039ad22dedaa22317a2bd"
       },
       "versions": [
+        {
+          "version": "1.2",
+          "url": "https://github.com/hazptr/kia-menu/releases/download/v1.2/kia.menu-v1.2.zip",
+          "sha256": "73ee1029e50e2d228a07543b158776f13d956765ee687b19e84a5d22a090e146",
+          "size": 26983,
+          "firmware": [
+            "*"
+          ],
+          "requires": [],
+          "notes": "Fixes Edit Menu closing with an error when you press Back.",
+          "review": {
+            "types": [
+              "application"
+            ],
+            "apps": [
+              {
+                "package": "dev.kiamenu.editor",
+                "version_code": 7
+              }
+            ],
+            "services": [],
+            "root_services": [],
+            "system_writes": false,
+            "execute": false
+          }
+        },
         {
           "version": "1.1",
           "url": "https://github.com/hazptr/kia-menu/releases/download/v1.1/kia.menu-v1.1.zip",
@@ -273,14 +299,14 @@
           ],
           "notes": "First release. Replaces HMG Leafia Plus's wireless projection package.",
           "review": {
+            "apps": [],
+            "execute": false,
+            "root_services": [],
+            "services": [],
+            "system_writes": true,
             "types": [
               "application"
-            ],
-            "apps": [],
-            "services": [],
-            "root_services": [],
-            "system_writes": true,
-            "execute": false
+            ]
           }
         }
       ]
