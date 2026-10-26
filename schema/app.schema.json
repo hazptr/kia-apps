@@ -24,6 +24,22 @@
       "maxLength": 300,
       "pattern": "^https://[^\\s]+$"
     },
+    "deprecated": {
+      "description": "Retires the app: why, in plain words for drivers. The store stops offering it but keeps showing it to cars that have it, with Remove. Entries are never deleted.",
+      "type": "string",
+      "maxLength": 300
+    },
+    "withdrawn": {
+      "description": "Pulled for safety: why, in plain words. Like deprecated, and the store also urges cars that have it to remove it.",
+      "type": "string",
+      "maxLength": 300
+    },
+    "replaced_by": {
+      "description": "With deprecated or withdrawn: the id of the app that takes its place.",
+      "type": "string",
+      "maxLength": 64,
+      "pattern": "^[A-Za-z0-9]+([._-][A-Za-z0-9]+)*$"
+    },
     "versions": {
       "description": "Newest first.",
       "type": "array",

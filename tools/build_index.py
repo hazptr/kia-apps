@@ -85,6 +85,10 @@ def build(apps_dir, pages, key_id, now, first=False, base_url=BASE_URL, fetcher=
             if ic:
                 entry["icon"] = ic
                 icons.add(a["id"] + ".png")
+        # retired apps stay listed, so cars that have one can show why and offer its removal
+        for k in ("deprecated", "withdrawn", "replaced_by"):
+            if k in a:
+                entry[k] = a[k]
         entry["versions"] = []
         for v, rv in zip(a["versions"], r["versions"]):
             entry["versions"].append({
