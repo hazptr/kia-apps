@@ -9,6 +9,15 @@
   "category": "fixes",
   "versions": [
     {
+      "version": "1.2",
+      "url": "https://github.com/hazptr/kia-tweaks/releases/download/v1.2/kia.tweaks-v1.2.zip",
+      "sha256": "b88d33e85d427ab2c55c7cbd7530fef7cf7a87cc71d4d7b062699f3df5668bf3",
+      "firmware": [
+        "CVEV.USA.0000.V015.012.260507"
+      ],
+      "notes": "Supports tweak packs from other apps. Tweaks that are removed or replaced are switched off safely."
+    },
+    {
       "version": "1.1",
       "url": "https://github.com/hazptr/kia-tweaks/releases/download/v1.1/kia.tweaks-v1.1.zip",
       "sha256": "2da24d3437ebc28bb45813aae1cd07ce1ffc9fb91fe4b095ad145031f73e7340",
