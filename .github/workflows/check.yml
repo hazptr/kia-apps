@@ -27,6 +27,8 @@ jobs:
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           PR: ${{ github.event.pull_request.number }}
+          # the owner maintains the tools and docs; everyone else may only touch apps/
+          AUTHOR: ${{ github.event.pull_request.author_association }}
         run: |
           out="$RUNNER_TEMP/review"
           mkdir -p "$out"
@@ -55,7 +57,10 @@ jobs:
             for f in $removed; do printf -- '- `%s`\n' "$f" >> "$out/comment.md"; done
             status=1
           fi
-          if [ -n "$outside" ]; then
+          if [ -n "$outside" ] && [ "$AUTHOR" = OWNER ]; then
+            printf '\n### Files outside apps/ (owner)\n\n' >> "$out/comment.md"
+            for f in $outside; do printf -- '- `%s`\n' "$f" >> "$out/comment.md"; done
+          elif [ -n "$outside" ]; then
             printf '\n### :x: Files outside apps/\n\nA PR may only change apps/<id>.json files:\n\n' >> "$out/comment.md"
             for f in $outside; do printf -- '- `%s`\n' "$f" >> "$out/comment.md"; done
             status=1
