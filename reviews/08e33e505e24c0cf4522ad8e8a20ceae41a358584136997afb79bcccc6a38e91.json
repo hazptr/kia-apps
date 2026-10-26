@@ -1,0 +1,159 @@
+{
+ "flags": [
+  {
+   "file": "lib/projection.sh",
+   "line": 136,
+   "rules": [
+    "remount"
+   ],
+   "text": "$NEMESIS remount ro >/dev/null 2>&1"
+  },
+  {
+   "file": "lib/projection.sh",
+   "line": 211,
+   "rules": [
+    "remount"
+   ],
+   "text": "sys_rw() { $NEMESIS remount rw >/dev/null 2>&1 || fail \"remount /system rw\"; }"
+  },
+  {
+   "file": "lib/projection.sh",
+   "line": 212,
+   "rules": [
+    "remount"
+   ],
+   "text": "sys_ro() { sync; $NEMESIS remount ro >/dev/null 2>&1; true; }"
+  },
+  {
+   "file": "lib/projection.sh",
+   "line": 217,
+   "rules": [
+    "perms-unknown"
+   ],
+   "text": "cp \"$1\" \"$2.kt\" && chmod 644 \"$2.kt\" && mv \"$2.kt\" \"$2\" && cmp \"$1\" \"$2\" >/dev/null 2>&1 \\"
+  },
+  {
+   "file": "lib/projection.sh",
+   "line": 228,
+   "rules": [
+    "perms-unknown"
+   ],
+   "text": "chmod 644 \"$odex\""
+  },
+  {
+   "file": "lib/projection.sh",
+   "line": 252,
+   "rules": [
+    "as-uid"
+   ],
+   "text": "[ -n \"$R\" ] || $NEMESIS root 1000 -c \"rm -f$c\" >/dev/null 2>&1"
+  },
+  {
+   "file": "lib/projection.sh",
+   "line": 259,
+   "rules": [
+    "setprop"
+   ],
+   "text": "setprop $p t"
+  },
+  {
+   "file": "lib/projection.sh",
+   "line": 268,
+   "rules": [
+    "setprop"
+   ],
+   "text": "for p in $PROPS; do setprop $p \"\"; done"
+  },
+  {
+   "file": "lib/leafia/libev6aac.so",
+   "line": 0,
+   "rules": [
+    "binary"
+   ],
+   "text": ""
+  },
+  {
+   "file": "tweaks/aa-reconnect/run.sh",
+   "line": 46,
+   "rules": [
+    "as-uid",
+    "kill"
+   ],
+   "text": "/system/xbin/nemesis root 1000 -c \"kill $1\" >/dev/null 2>&1"
+  },
+  {
+   "file": "tweaks/adb-tcp-hotspot/enable.sh",
+   "line": 8,
+   "rules": [
+    "remount"
+   ],
+   "text": "$NEMESIS remount rw >/dev/null 2>&1 || fail \"remount /system rw\""
+  },
+  {
+   "file": "tweaks/adb-tcp-hotspot/enable.sh",
+   "line": 10,
+   "rules": [
+    "perms-unknown"
+   ],
+   "text": "cp \"$OURS\" \"$IFC.kt\" && chmod 755 \"$IFC.kt\" && mv \"$IFC.kt\" \"$IFC\" || { rm -f \"$IFC.kt\"; fail \"writing $IFC\"; }"
+  },
+  {
+   "file": "tweaks/adb-tcp-hotspot/enable.sh",
+   "line": 12,
+   "rules": [
+    "remount"
+   ],
+   "text": "$NEMESIS remount ro >/dev/null 2>&1"
+  },
+  {
+   "file": "tweaks/adb-tcp-hotspot/enable.sh",
+   "line": 18,
+   "rules": [
+    "setprop"
+   ],
+   "text": "setprop ctl.start set_adb_ip"
+  },
+  {
+   "file": "tweaks/adb-tcp-hotspot/disable.sh",
+   "line": 8,
+   "rules": [
+    "remount"
+   ],
+   "text": "$NEMESIS remount rw >/dev/null 2>&1 || fail \"remount /system rw\""
+  },
+  {
+   "file": "tweaks/adb-tcp-hotspot/disable.sh",
+   "line": 12,
+   "rules": [
+    "remount"
+   ],
+   "text": "$NEMESIS remount ro >/dev/null 2>&1"
+  },
+  {
+   "file": "tweaks/adb-tcp-hotspot/common.sh",
+   "line": 15,
+   "rules": [
+    "remount"
+   ],
+   "text": "fail() { echo \"FAIL: $1\"; $NEMESIS remount ro >/dev/null 2>&1; exit 1; }"
+  }
+ ],
+ "nemesis": {
+  "id": "tweaks.projection",
+  "version": "1.0"
+ },
+ "review": {
+  "apps": [],
+  "execute": false,
+  "root_services": [],
+  "services": [],
+  "system_writes": true,
+  "types": [
+   "application"
+  ]
+ },
+ "sha256": "08e33e505e24c0cf4522ad8e8a20ceae41a358584136997afb79bcccc6a38e91",
+ "size": 780054,
+ "tool": 1,
+ "warnings": []
+}
