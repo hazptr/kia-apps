@@ -9,6 +9,15 @@
   "category": "tools",
   "versions": [
     {
+      "version": "1.2",
+      "url": "https://github.com/hazptr/kia-menu/releases/download/v1.2/kia.menu-v1.2.zip",
+      "sha256": "73ee1029e50e2d228a07543b158776f13d956765ee687b19e84a5d22a090e146",
+      "firmware": [
+        "*"
+      ],
+      "notes": "Fixes Edit Menu closing with an error when you press Back."
+    },
+    {
       "version": "1.1",
       "url": "https://github.com/hazptr/kia-menu/releases/download/v1.1/kia.menu-v1.1.zip",
       "sha256": "bcefd8d657a5d16da6fb4680ab3a447bc12fff966947d16bf93495cf092a2b63",
