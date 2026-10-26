@@ -1,8 +1,8 @@
 {
   "format": 1,
-  "sequence": 8,
-  "generated": "2026-10-25T23:53:41Z",
-  "expires": "2027-01-23T23:53:41Z",
+  "sequence": 9,
+  "generated": "2026-10-26T01:15:15Z",
+  "expires": "2027-01-24T01:15:15Z",
   "key_id": "kia-apps-2026a",
   "apps": [
     {
@@ -29,19 +29,19 @@
           "requires": [],
           "notes": "First release in the store.",
           "review": {
-            "types": [
-              "application"
-            ],
             "apps": [
               {
                 "package": "dev.kiamenu.editor",
                 "version_code": 6
               }
             ],
-            "services": [],
+            "execute": false,
             "root_services": [],
+            "services": [],
             "system_writes": false,
-            "execute": false
+            "types": [
+              "application"
+            ]
           }
         }
       ]
@@ -60,15 +60,15 @@
       },
       "versions": [
         {
-          "version": "1.0",
-          "url": "https://github.com/hazptr/kia-store/releases/download/v1.0/kia.store-v1.0.zip",
-          "sha256": "037c2b35fd7ca5f10032fc6bc635c4e8215692cebd03603a272026849297312f",
-          "size": 75623,
+          "version": "1.1",
+          "url": "https://github.com/hazptr/kia-store/releases/download/v1.1/kia.store-v1.1.zip",
+          "sha256": "44a34631997138b1ae48fb94b9df91b29f6a8e351b064db4407fc39c26a6ae06",
+          "size": 85702,
           "firmware": [
             "*"
           ],
           "requires": [],
-          "notes": "First release.",
+          "notes": "An Updates tab with Update all. Shows apps that are no longer offered. Safer handling of install requests.",
           "review": {
             "types": [
               "application",
@@ -93,6 +93,41 @@
             "system_writes": false,
             "execute": false
           }
+        },
+        {
+          "version": "1.0",
+          "url": "https://github.com/hazptr/kia-store/releases/download/v1.0/kia.store-v1.0.zip",
+          "sha256": "037c2b35fd7ca5f10032fc6bc635c4e8215692cebd03603a272026849297312f",
+          "size": 75623,
+          "firmware": [
+            "*"
+          ],
+          "requires": [],
+          "notes": "First release.",
+          "review": {
+            "apps": [
+              {
+                "package": "dev.kiastore",
+                "version_code": 1
+              }
+            ],
+            "execute": false,
+            "root_services": [
+              "helper"
+            ],
+            "services": [
+              {
+                "mode": "restart",
+                "name": "helper",
+                "uid": "root"
+              }
+            ],
+            "system_writes": false,
+            "types": [
+              "application",
+              "service"
+            ]
+          }
         }
       ]
     },
@@ -110,15 +145,15 @@
       },
       "versions": [
         {
-          "version": "1.1",
-          "url": "https://github.com/hazptr/kia-tweaks/releases/download/v1.1/kia.tweaks-v1.1.zip",
-          "sha256": "2da24d3437ebc28bb45813aae1cd07ce1ffc9fb91fe4b095ad145031f73e7340",
-          "size": 161759,
+          "version": "1.2",
+          "url": "https://github.com/hazptr/kia-tweaks/releases/download/v1.2/kia.tweaks-v1.2.zip",
+          "sha256": "b88d33e85d427ab2c55c7cbd7530fef7cf7a87cc71d4d7b062699f3df5668bf3",
+          "size": 165875,
           "firmware": [
             "CVEV.USA.0000.V015.012.260507"
           ],
           "requires": [],
-          "notes": "Simpler descriptions for every tweak.",
+          "notes": "Supports tweak packs from other apps. Tweaks that are removed or replaced are switched off safely.",
           "review": {
             "types": [
               "application",
@@ -145,6 +180,41 @@
           }
         },
         {
+          "version": "1.1",
+          "url": "https://github.com/hazptr/kia-tweaks/releases/download/v1.1/kia.tweaks-v1.1.zip",
+          "sha256": "2da24d3437ebc28bb45813aae1cd07ce1ffc9fb91fe4b095ad145031f73e7340",
+          "size": 161759,
+          "firmware": [
+            "CVEV.USA.0000.V015.012.260507"
+          ],
+          "requires": [],
+          "notes": "Simpler descriptions for every tweak.",
+          "review": {
+            "apps": [
+              {
+                "package": "dev.kiatweaks",
+                "version_code": 1
+              }
+            ],
+            "execute": false,
+            "root_services": [
+              "tweaksd"
+            ],
+            "services": [
+              {
+                "mode": "restart",
+                "name": "tweaksd",
+                "uid": "root"
+              }
+            ],
+            "system_writes": true,
+            "types": [
+              "application",
+              "service"
+            ]
+          }
+        },
+        {
           "version": "1.0",
           "url": "https://github.com/hazptr/kia-tweaks/releases/download/v1.0/kia.tweaks-v1.0.zip",
           "sha256": "c57082a4dec8203c3f8953ab12a253e100c4964e99561ffe3c7e1c0e91ec13c1",
@@ -155,28 +225,28 @@
           "requires": [],
           "notes": "First release: replaces ev6.fixes (eth0 guard and Android Auto recovery are now tweaks).",
           "review": {
-            "types": [
-              "application",
-              "service"
-            ],
             "apps": [
               {
                 "package": "dev.kiatweaks",
                 "version_code": 1
               }
             ],
-            "services": [
-              {
-                "name": "tweaksd",
-                "uid": "root",
-                "mode": "restart"
-              }
-            ],
+            "execute": false,
             "root_services": [
               "tweaksd"
             ],
+            "services": [
+              {
+                "mode": "restart",
+                "name": "tweaksd",
+                "uid": "root"
+              }
+            ],
             "system_writes": true,
-            "execute": false
+            "types": [
+              "application",
+              "service"
+            ]
           }
         }
       ]
