@@ -37,8 +37,9 @@ jobs:
           tools="$RUNNER_TEMP/base/tools"
 
           outside=$(git diff --name-only "$BASE_SHA" HEAD | grep -v '^apps/' || true)
-          apps=$(git diff --name-only --diff-filter=AMR "$BASE_SHA" HEAD -- 'apps/*.json')
-          removed=$(git diff --name-only --diff-filter=D "$BASE_SHA" HEAD -- 'apps/*.json')
+          # --no-renames: a renamed entry counts as deleted (and its new name as added)
+          apps=$(git diff --name-only --no-renames --diff-filter=AM "$BASE_SHA" HEAD -- 'apps/*.json')
+          removed=$(git diff --name-only --no-renames --diff-filter=D "$BASE_SHA" HEAD -- 'apps/*.json')
           status=0
           if [ -n "$apps" ]; then
             # shellcheck disable=SC2086
@@ -47,9 +48,12 @@ jobs:
           else
             printf '<!-- kia-apps-review -->\n## kia-apps review\n\nNo apps/*.json added or changed.\n' > "$out/comment.md"
           fi
+          # entries are never deleted: cars that installed the app need it in the index to
+          # show it as retired and offer its removal
           if [ -n "$removed" ]; then
-            printf '\n### Removed\n\n' >> "$out/comment.md"
+            printf '\n### :x: Deleted entries\n\nEntries are never deleted from the index. To retire an app, keep its file and set `"deprecated": "<why, in plain words>"` (and `"replaced_by": "<id>"` if another app takes its place); see CONTRIBUTING.md.\n\n' >> "$out/comment.md"
             for f in $removed; do printf -- '- `%s`\n' "$f" >> "$out/comment.md"; done
+            status=1
           fi
           if [ -n "$outside" ]; then
             printf '\n### :x: Files outside apps/\n\nA PR may only change apps/<id>.json files:\n\n' >> "$out/comment.md"

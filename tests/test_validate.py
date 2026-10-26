@@ -172,6 +172,64 @@ class Apps(unittest.TestCase):
         self.assertIn("Checks failed", bad)
         self.assertNotIn("@someone", validate.md("@someone"))
 
+    def test_retired_needs_a_reason(self):
+        for k in ("deprecated", "withdrawn"):
+            rep = self.check(entry(versions=[self.v], **{k: "  "}))
+            self.assertIn("%s needs a reason" % k, rep["errors"][0])
+            rep = self.check(entry(versions=[self.v], **{k: True}))
+            self.assertIn("should be a string", rep["errors"][0])
+            rep = self.check(entry(versions=[self.v], **{k: "Built into Tweaks now."}))
+            self.assertEqual(self.errors(rep), [])
+            self.assertIn("**%s**" % k, validate.comment([rep]))
+
+    def test_replaced_by(self):
+        rep = self.check(entry(versions=[self.v], deprecated="Old.", replaced_by="kia.new"))
+        self.assertIn("replaced_by names kia.new, which isn't in the index", rep["errors"][0])
+        write(self.dir, entry("kia.new", versions=[self.v]))
+        rep = self.check(entry(versions=[self.v], deprecated="Old.", replaced_by="kia.new"))
+        self.assertEqual(self.errors(rep), [])
+        self.assertIn("replaced by `kia.new`", validate.comment([rep]))
+        rep = self.check(entry(versions=[self.v], replaced_by="kia.new"))
+        self.assertIn("only goes with deprecated or withdrawn", rep["errors"][0])
+        rep = self.check(entry(versions=[self.v], deprecated="Old.", replaced_by="test.pkg"))
+        self.assertIn("names the app itself", rep["errors"][0])
+        write(self.dir, entry("kia.new", versions=[self.v], withdrawn="Unsafe."))
+        rep = self.check(entry(versions=[self.v], deprecated="Old.", replaced_by="kia.new"))
+        self.assertIn("withdrawn too", rep["warnings"][0])
+
+    def test_no_new_versions_on_a_retired_app(self):
+        z2 = package(version="1.2")
+        v2 = version("1.2", z2)
+        self.fetch.files[v2["url"]] = z2
+        base = json.dumps(entry(versions=[self.v]))
+        for k in ("deprecated", "withdrawn"):
+            # retiring as it is: fine, and nothing is downloaded
+            calls = len(self.fetch.calls)
+            rep = self.check(entry(versions=[self.v], **{k: "Old."}), base=base)
+            self.assertEqual(self.errors(rep), [])
+            self.assertEqual(self.fetch.calls[calls:], [])
+            rep = self.check(entry(versions=[v2, self.v], **{k: "Old."}), base=base)
+            self.assertIn("no new versions", rep["versions"][0]["errors"][0])
+            self.assertEqual(rep["versions"][1]["errors"], [])
+            rep = self.check(entry(versions=[dict(self.v, sha256="1" * 64)], **{k: "Old."}), base=base)
+            self.assertIn("no new versions", rep["versions"][0]["errors"][0])
+        # a new file can't start out retired; without --base (publish) every version is checked
+        rep = self.check(entry(versions=[self.v], deprecated="Old."), base="")
+        self.assertIn("no new versions", rep["versions"][0]["errors"][0])
+        self.assertEqual(self.errors(self.check(entry(versions=[self.v], deprecated="Old."))), [])
+        # un-retiring is the owner's call, and the comment says so
+        rep = self.check(entry(versions=[v2, self.v]), base=json.dumps(entry(versions=[self.v], deprecated="x")))
+        self.assertEqual(self.errors(rep), [])
+        self.assertIn("offers it again", rep["warnings"][0])
+
+    def test_requiring_a_retired_app_warns(self):
+        write(self.dir, entry("kia.menu", versions=[dict(self.v, version="1.0")], deprecated="Old."))
+        rep = self.check(entry(versions=[dict(self.v, requires=["kia.menu"])]))
+        self.assertEqual(self.errors(rep), [])
+        self.assertIn("which is deprecated", rep["warnings"][0])
+        rep = self.check(entry("kia.menu", versions=[self.v], deprecated="Old."))
+        self.assertIn("test.pkg requires this app", rep["warnings"][0])
+
 
 class Fetch(unittest.TestCase):
     def test_https_only(self):

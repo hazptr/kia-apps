@@ -91,7 +91,8 @@ lists exact firmware, so the reviewer checks the strings are right).
 
 The check fails on anything malformed or mismatched: bad JSON or schema, an id that doesn't
 match the file name or the zip, a hash mismatch, versions out of order, a missing
-`requires` target, `type=execute`, or system writes with `firmware: ["*"]`.
+`requires` target, `type=execute`, system writes with `firmware: ["*"]`, or a deleted
+`apps/*.json` (see [Retiring an app](#retiring-an-app)).
 
 The owner reads the review and the scripts and merges or doesn't. A package with a root
 service controls every car that installs it, so expect questions about anything flagged.
@@ -100,3 +101,25 @@ service controls every car that installs it, so expect questions about anything 
 
 Add the new version at the top of `versions` in a new PR (keep or drop the old ones). Same
 checks, same review.
+
+## Retiring an app
+
+Entries are never deleted: a car that installed an app needs its entry to tell the driver it's
+gone and to offer its removal. A PR that deletes (or renames) an `apps/*.json` fails the check.
+The owner retires an app with a PR that keeps the file and sets:
+
+```json
+  "deprecated": "Built into Tweaks now.",
+  "replaced_by": "kia.tweaks",
+```
+
+- `deprecated`: why, in plain words for drivers. It can't be empty. The store stops offering
+  the app (no install, no update) and shows it, only to cars that have it, as "No longer
+  offered" with this reason and a Remove button.
+- `replaced_by` (optional): the id of another app in the index, which the store offers as
+  "Get <name> instead". It must exist in `apps/`.
+- `withdrawn`: for an app pulled for safety, with the reason. Everything `deprecated` does, plus
+  a warning on the store's front page, on cars that have it, urging its removal.
+
+Leave `versions` as they are: a retired entry can't gain new versions or new zips (the check
+fails). To offer an app again, drop `deprecated`/`withdrawn` in a PR; the review says so.

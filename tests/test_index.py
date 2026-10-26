@@ -87,6 +87,28 @@ class Build(unittest.TestCase):
         self.assertIn("sha256 mismatch", str(c.exception))
         self.assertFalse((self.pages / "index.json").exists())
 
+    def test_retired_fields_are_published(self):
+        doc = json.loads((self.apps / "b.pkg.json").read_text())
+        doc.update(deprecated="Built into A now.", replaced_by="a.pkg")
+        write(self.apps, doc)
+        idx = self.build(first=True)
+        a, b = idx["apps"]
+        self.assertEqual((b["deprecated"], b["replaced_by"]), ("Built into A now.", "a.pkg"))
+        self.assertNotIn("withdrawn", b)
+        self.assertFalse({"deprecated", "withdrawn", "replaced_by"} & set(a))
+        self.assertEqual(len(b["versions"]), 1, "a retired app keeps its versions")
+        doc["withdrawn"] = "Unsafe."
+        write(self.apps, doc)
+        self.assertEqual(self.build()["apps"][1]["withdrawn"], "Unsafe.")
+
+    def test_bad_replaced_by_fails_the_build(self):
+        doc = json.loads((self.apps / "b.pkg.json").read_text())
+        doc.update(deprecated="Old.", replaced_by="gone.pkg")
+        write(self.apps, doc)
+        with self.assertRaises(validate.Fail) as c:
+            self.build(first=True)
+        self.assertIn("replaced_by names gone.pkg", str(c.exception))
+
     def test_icon_outage_keeps_last_icon(self):
         self.build(first=True)
         del self.fetch.files[self.icon]

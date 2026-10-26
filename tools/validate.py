@@ -9,7 +9,8 @@ GitHub Releases, checks its SHA-256, opens it, checks NEMESIS.data against the e
 writes a review: what the package installs, what runs as root, and every script line that
 touches the system. Errors exit 1. Flags never fail: they are for the owner's review.
 
-  --base REF            versions identical to the ones in REF's copy aren't downloaded
+  --base REF            versions identical to the ones in REF's copy aren't downloaded, and
+                        retired apps (deprecated, withdrawn) can't gain new ones
   --cache DIR           review cache, DIR/<sha256>.json (publish keeps it on gh-pages)
   --local-zip [ID@VER=]PATH
                         use a local zip instead of downloading (plain PATH: the newest
@@ -75,6 +76,8 @@ def vcmp(a, b):
     return (ka > kb) - (ka < kb)
 
 
+# set on an app that is retired; entries are never deleted, so cars that have it can be told
+RETIRED = ("withdrawn", "deprecated")
 REQUIRE = re.compile(r"^([A-Za-z0-9]+(?:[._-][A-Za-z0-9]+)*)(?:>=([0-9]+(?:\.[0-9]+)*))?$")
 
 
@@ -722,8 +725,59 @@ def git_toplevel(path):
     return out.stdout.decode().strip()
 
 
+def retired(doc):
+    """"withdrawn" or "deprecated" if the app is retired, else None."""
+    for k in RETIRED:
+        if k in doc:
+            return k
+    return None
+
+
+def load_entry(path):
+    try:
+        doc = json.loads(Path(path).read_text())
+        return doc if isinstance(doc, dict) else None
+    except (OSError, ValueError):
+        return None
+
+
+def check_retirement(doc, apps_dir, base_doc, rep):
+    err, warn = rep["errors"].append, rep["warnings"].append
+    for k in RETIRED:
+        if k in doc and not doc[k].strip():
+            err("%s needs a reason: say in plain words why the app is retired" % k)
+    how = retired(doc)
+    rb = doc.get("replaced_by")
+    if rb is not None:
+        if not how:
+            err("replaced_by only goes with deprecated or withdrawn")
+        elif rb == doc["id"]:
+            err("replaced_by names the app itself")
+        else:
+            other = load_entry(apps_dir / ("%s.json" % rb))
+            if other is None:
+                err("replaced_by names %s, which isn't in the index (%s)" % (rb, apps_dir))
+            elif retired(other):
+                warn("replaced_by names %s, which is %s too" % (rb, retired(other)))
+    if how:
+        # an app still offered that needs this one can no longer be installed where it's missing
+        for p in sorted(apps_dir.glob("*.json")):
+            other = load_entry(p)
+            if not other or other.get("id") == doc["id"] or retired(other):
+                continue
+            try:
+                needs = other["versions"][0].get("requires", [])
+            except (KeyError, IndexError, TypeError, AttributeError):
+                continue
+            if any(isinstance(r, str) and REQUIRE.match(r) and REQUIRE.match(r).group(1) == doc["id"] for r in needs):
+                warn("%s requires this app, so cars without it can't install %s any more" % (other["id"], other["id"]))
+    if base_doc is not None and retired(base_doc) and not how:
+        warn("was %s: the store offers it again" % retired(base_doc))
+
+
 def check_app(path, base=None, cache=None, local_zips=None, apps_dir=None, fetcher=fetch, icons=True):
-    """One apps/<id>.json -> report dict. base: the old file's text, or None (all versions new)."""
+    """One apps/<id>.json -> report dict. base: the old file's text, "" for a file that is new
+    against the base, or None (no base: every version is checked, as new)."""
     path = Path(path)
     rep = {"file": str(path), "id": path.stem, "errors": [], "warnings": [], "versions": [], "app": None}
     err = rep["errors"].append
@@ -764,10 +818,14 @@ def check_app(path, base=None, cache=None, local_zips=None, apps_dir=None, fetch
                 err("%s: requires %s, which isn't in %s" % (v["version"], rid, apps_dir))
                 continue
             try:
-                newest = json.loads(dep.read_text())["versions"][0]["version"]
+                d = json.loads(dep.read_text())
+                newest = d["versions"][0]["version"]
                 if rver and vcmp(newest, rver) < 0:
                     rep["warnings"].append("%s: requires %s but its newest listed version is %s" % (
                         v["version"], r, newest))
+                if retired(d):
+                    rep["warnings"].append("%s: requires %s, which is %s: cars without it can't install this" % (
+                        v["version"], rid, retired(d)))
             except (ValueError, KeyError, IndexError, TypeError):
                 pass
 
@@ -777,13 +835,15 @@ def check_app(path, base=None, cache=None, local_zips=None, apps_dir=None, fetch
         except Fail as e:
             err("icon: %s" % e)
 
-    old = {}
+    old, base_doc = {}, None
     if base:
         try:
-            old = {v["version"]: v for v in json.loads(base).get("versions", [])}
+            base_doc = json.loads(base)
+            old = {v["version"]: v for v in base_doc.get("versions", [])}
         except (ValueError, AttributeError, TypeError):
-            old = {}
+            old, base_doc = {}, None
     rep["removed"] = [v for v in old if v not in versions]
+    check_retirement(doc, apps_dir, base_doc if isinstance(base_doc, dict) else None, rep)
 
     for i, v in enumerate(doc["versions"]):
         ver = {"version": v["version"], "url": v["url"], "sha256": v["sha256"], "status": "new",
@@ -798,6 +858,10 @@ def check_app(path, base=None, cache=None, local_zips=None, apps_dir=None, fetch
                 ver["status"] = "changed"
                 ver["warnings"].append("version %s was already listed with a different zip: cars that "
                                        "installed the old one won't see this as an update" % v["version"])
+        # a retired app keeps the versions cars may have, but gets no new ones
+        if base is not None and retired(doc) and ver["status"] != "unchanged":
+            verr("the app is %s: no new versions can be added to it" % retired(doc))
+            continue
         if not RELEASE_URL.match(v["url"]):
             verr("url must be https://github.com/<owner>/<repo>/releases/download/<tag>/<file>")
             continue
@@ -904,6 +968,13 @@ def comment(reps, extra_errors=()):
             lines.append("- :x: %s" % md(e))
         for w in rep["warnings"]:
             lines.append("- :warning: %s" % md(w))
+        app = rep.get("app") or {}
+        if app.get("withdrawn"):
+            lines.append("- **withdrawn** (cars that have it are urged to remove it): %s" % md(app["withdrawn"]))
+        if app.get("deprecated"):
+            lines.append("- **deprecated** (no longer offered): %s" % md(app["deprecated"]))
+        if app.get("replaced_by"):
+            lines.append("- replaced by %s" % code(app["replaced_by"]))
         for r in rep.get("removed", []):
             lines.append("- removes version %s" % code(r))
         for v in rep["versions"]:
@@ -977,7 +1048,9 @@ def main(argv=None):
 
     reps = []
     for f in a.files:
-        base = git_show(a.base, f) if a.base else None
+        base = None
+        if a.base:
+            base = git_show(a.base, f) or ""  # "": not in the base, so every version is new
         reps.append(check_app(f, base, a.cache, local, a.apps_dir))
     text = comment(reps)
     if a.comment:
