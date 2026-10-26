@@ -1,8 +1,8 @@
 {
   "format": 1,
-  "sequence": 9,
-  "generated": "2026-10-26T01:15:15Z",
-  "expires": "2027-01-24T01:15:15Z",
+  "sequence": 10,
+  "generated": "2026-10-26T01:18:48Z",
+  "expires": "2027-01-24T01:18:48Z",
   "key_id": "kia-apps-2026a",
   "apps": [
     {
@@ -70,28 +70,28 @@
           "requires": [],
           "notes": "An Updates tab with Update all. Shows apps that are no longer offered. Safer handling of install requests.",
           "review": {
-            "types": [
-              "application",
-              "service"
-            ],
             "apps": [
               {
                 "package": "dev.kiastore",
                 "version_code": 1
               }
             ],
-            "services": [
-              {
-                "name": "helper",
-                "uid": "root",
-                "mode": "restart"
-              }
-            ],
+            "execute": false,
             "root_services": [
               "helper"
             ],
+            "services": [
+              {
+                "mode": "restart",
+                "name": "helper",
+                "uid": "root"
+              }
+            ],
             "system_writes": false,
-            "execute": false
+            "types": [
+              "application",
+              "service"
+            ]
           }
         },
         {
@@ -155,28 +155,28 @@
           "requires": [],
           "notes": "Supports tweak packs from other apps. Tweaks that are removed or replaced are switched off safely.",
           "review": {
-            "types": [
-              "application",
-              "service"
-            ],
             "apps": [
               {
                 "package": "dev.kiatweaks",
                 "version_code": 1
               }
             ],
-            "services": [
-              {
-                "name": "tweaksd",
-                "uid": "root",
-                "mode": "restart"
-              }
-            ],
+            "execute": false,
             "root_services": [
               "tweaksd"
             ],
+            "services": [
+              {
+                "mode": "restart",
+                "name": "tweaksd",
+                "uid": "root"
+              }
+            ],
             "system_writes": true,
-            "execute": false
+            "types": [
+              "application",
+              "service"
+            ]
           }
         },
         {
