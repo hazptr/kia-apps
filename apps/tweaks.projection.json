@@ -8,6 +8,18 @@
   "category": "projection",
   "versions": [
     {
+      "version": "1.1",
+      "url": "https://github.com/cabinwright/tweaks-projection/releases/download/v1.1/tweaks.projection-v1.1.zip",
+      "sha256": "3df9e7a830d7ac972c9e25d685873828d5b5549d9ff61ef7d7afaf190c980848",
+      "firmware": [
+        "CVEV.USA.0000.V015.012.260507"
+      ],
+      "requires": [
+        "kia.tweaks>=1.3"
+      ],
+      "notes": "Takes over the switch of the retired Android Auto fix in Tweaks."
+    },
+    {
       "version": "1.0",
       "url": "https://github.com/cabinwright/tweaks-projection/releases/download/v1.0/tweaks.projection-v1.0.zip",
       "sha256": "08e33e505e24c0cf4522ad8e8a20ceae41a358584136997afb79bcccc6a38e91",

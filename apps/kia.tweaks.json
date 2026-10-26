@@ -9,6 +9,15 @@
   "category": "fixes",
   "versions": [
     {
+      "version": "1.3",
+      "url": "https://github.com/hazptr/kia-tweaks/releases/download/v1.3/kia.tweaks-v1.3.zip",
+      "sha256": "b6856435ca6d304457faa3e95e88891ddac03e3e22bcf196682cfc435f0832e5",
+      "firmware": [
+        "CVEV.USA.0000.V015.012.260507"
+      ],
+      "notes": "Two older Android Auto fixes are retired; the Wireless Android Auto and CarPlay pack does their job now."
+    },
+    {
       "version": "1.2",
       "url": "https://github.com/hazptr/kia-tweaks/releases/download/v1.2/kia.tweaks-v1.2.zip",
       "sha256": "b88d33e85d427ab2c55c7cbd7530fef7cf7a87cc71d4d7b062699f3df5668bf3",
