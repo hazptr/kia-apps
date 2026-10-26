@@ -1,0 +1,23 @@
+{
+  "id": "tweaks.projection",
+  "name": "Wireless Android Auto and CarPlay",
+  "summary": "Use Android Auto and CarPlay without a cable",
+  "description": "Adds switches to Tweaks for wireless Android Auto and CarPlay, directions on the driver's display, and automatic reconnecting. Needs Tweaks.",
+  "author": "hazptr",
+  "homepage": "https://github.com/cabinwright/tweaks-projection",
+  "category": "projection",
+  "versions": [
+    {
+      "version": "1.0",
+      "url": "https://github.com/cabinwright/tweaks-projection/releases/download/v1.0/tweaks.projection-v1.0.zip",
+      "sha256": "08e33e505e24c0cf4522ad8e8a20ceae41a358584136997afb79bcccc6a38e91",
+      "firmware": [
+        "CVEV.USA.0000.V015.012.260507"
+      ],
+      "requires": [
+        "kia.tweaks>=1.2"
+      ],
+      "notes": "First release. Replaces HMG Leafia Plus's wireless projection package."
+    }
+  ]
+}
