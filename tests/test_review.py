@@ -137,6 +137,38 @@ class Packages(unittest.TestCase):
             "a.sh": "", "b.sh": "", "c.sh": ""})
         self.assertEqual(validate.inspect_zip(z)["review"]["root_services"], ["a", "c"])
 
+    def test_hooks_and_sh_entries_run_as_root(self):
+        nd = nemesis_data(types="application").replace("types=application\n", "types=application\npreinstall=s/pre.sh\npreuninstall=s/un.sh\n")
+        nd += "\n[app.0]\nkind=sh\npath=bin/st.sh\n\n[app.1]\nkind=sh\npath=bin/me.sh\nuid=1000\n"
+        z = make_zip({"NEMESIS.data": nd, "s/pre.sh": script("mount -o remount,rw /system"), "s/un.sh": "",
+                      "bin/st.sh": "", "bin/me.sh": ""})
+        r = validate.inspect_zip(z)
+        rv = r["review"]
+        self.assertEqual(rv["hooks"], [{"hook": "preinstall", "path": "s/pre.sh"},
+                                       {"hook": "preuninstall", "path": "s/un.sh"}])
+        self.assertEqual(rv["sh_entries"], [{"path": "bin/st.sh", "uid": "root"}, {"path": "bin/me.sh", "uid": "1000"}])
+        self.assertEqual(rv["root"], ["preinstall hook s/pre.sh", "preuninstall hook s/un.sh", "script bin/st.sh"])
+        self.assertEqual([f["file"] for f in r["flags"]], ["s/pre.sh"])
+        self.assertEqual(r["warnings"], [])
+        z = make_zip({"NEMESIS.data": nemesis_data(types="application").replace(
+            "types=application\n", "types=application\npostinstall=missing.sh\n")})
+        with self.assertRaisesRegex(validate.Fail, "postinstall"):
+            validate.inspect_zip(z)
+
+    def test_tweaks_run_as_root(self):
+        z = make_zip({"NEMESIS.data": nemesis_data(types="application"),
+                      "tweaks/x/tweak.conf": "name=X\nkind=oneshot\nrisk=system\n",
+                      "tweaks/x/enable.sh": script("setprop a b"),
+                      "tweaks/y/tweak.conf": "name=Y\nkind=service\nretired=1\n", "tweaks/y/run.sh": ""})
+        rv = validate.inspect_zip(z)["review"]
+        self.assertEqual(rv["tweaks"], [
+            {"id": "x", "name": "X", "kind": "oneshot", "risk": "system", "retired": False},
+            {"id": "y", "name": "Y", "kind": "service", "risk": "normal", "retired": True}])
+        self.assertEqual(rv["root"], ["tweak x (through Tweaks)", "tweak y (through Tweaks)"])
+        text = "\n".join(validate.describe({"review": rv}))
+        self.assertIn("adds the tweak `x` (oneshot, changes the system)", text)
+        self.assertIn("runs as root: `tweak x (through Tweaks)`", text)
+
     def test_execute(self):
         for extra in ("\ntype=execute\n", ""):
             nd = nemesis_data(types="application") + extra

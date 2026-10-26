@@ -65,7 +65,7 @@ class Build(unittest.TestCase):
         self.assertEqual(idx["apps"][1]["description"], "")
         v = a["versions"][0]
         self.assertEqual(set(v), {"version", "url", "sha256", "size", "firmware", "requires", "notes", "review"})
-        self.assertEqual(set(v["review"]), {"types", "apps", "services", "root_services", "system_writes", "execute"})
+        self.assertEqual(set(v["review"]), {"types", "apps", "services", "root_services", "system_writes", "execute", "hooks", "sh_entries", "tweaks", "root"})
         raw = (self.pages / "index.json").read_bytes()
         raw.decode("ascii")  # ASCII only
         self.assertEqual(json.loads(raw), idx)

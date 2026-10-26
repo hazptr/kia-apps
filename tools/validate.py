@@ -49,7 +49,7 @@ MAX_UNZIPPED = 256 << 20   # zip bombs: nothing legitimate on a head unit is nea
 MAX_ICON = 64 << 10
 MAX_ICON_PX = 256
 # bump when the review logic changes, so cached reviews are recomputed
-REVIEW_VERSION = 1
+REVIEW_VERSION = 2
 
 RELEASE_URL = re.compile(
     r"^https://github\.com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+/releases/download/[^/?#\s]+/[^/?#\s]+$")
@@ -78,6 +78,8 @@ def vcmp(a, b):
 
 # set on an app that is retired; entries are never deleted, so cars that have it can be told
 RETIRED = ("withdrawn", "deprecated")
+HOOKS = ("preinstall", "postinstall", "preuninstall", "postuninstall")
+TWEAK_CONF = re.compile(r"^tweaks/([^/]+)/tweak\.conf$")
 REQUIRE = re.compile(r"^([A-Za-z0-9]+(?:[._-][A-Za-z0-9]+)*)(?:>=([0-9]+(?:\.[0-9]+)*))?$")
 
 
@@ -627,9 +629,13 @@ def inspect_zip(data):
             raise Fail("NEMESIS.data %s path %r isn't in the zip" % (what, p))
         return p
 
-    apps, own = [], set()
+    apps, own, sh_entries = [], set(), []
     for i, sec in enumerate(numbered(ini, "app")):
         p = need(sec, "app")
+        if sec.get("kind", "apk") == "sh":
+            # a script NEMESIS runs from its UI; no uid means root
+            sh_entries.append({"path": p, "uid": sec.get("uid") or "root"})
+            continue
         if sec.get("kind", "apk") != "apk":
             warnings.append("[app.%d] kind=%s isn't apk" % (i, sec.get("kind")))
             continue
@@ -647,6 +653,29 @@ def inspect_zip(data):
         services.append({"name": name, "uid": uid, "mode": sec.get("mode", "")})
         if sec.get("kind", "sh") == "sh":
             scripts.add(p)
+
+    # install, update and uninstall hooks run as root (an update runs the old version's uninstall ones)
+    hooks = []
+    for k in HOOKS:
+        if nem.get(k):
+            hooks.append({"hook": k, "path": need({"path": nem[k]}, k)})
+            scripts.add(nem[k])
+    for e in sh_entries:
+        scripts.add(e["path"])
+
+    # tweak packs: Tweaks' runner runs every tweak's scripts as root
+    tweaks = []
+    for n in sorted(names):
+        m = TWEAK_CONF.match(n)
+        if not m:
+            continue
+        conf = {}
+        for line in z.read(n).decode("utf-8", "replace").splitlines():
+            k, sep, v = line.partition("=")
+            if sep:
+                conf[k.strip()] = v.strip()
+        tweaks.append({"id": m.group(1), "name": conf.get("name", ""), "kind": conf.get("kind", ""),
+                       "risk": conf.get("risk", "normal"), "retired": conf.get("retired") == "1"})
 
     if apps and "application" not in types:
         warnings.append("NEMESIS.data has apps but types doesn't include application")
@@ -675,6 +704,13 @@ def inspect_zip(data):
         "apps": apps,
         "services": services,
         "root_services": [s["name"] for s in services if s["uid"] in ("root", "0")],
+        "hooks": hooks,
+        "sh_entries": sh_entries,
+        "tweaks": tweaks,
+        "root": ["service " + s["name"] for s in services if s["uid"] in ("root", "0")]
+        + ["%s hook %s" % (h["hook"], h["path"]) for h in hooks]
+        + ["script " + e["path"] for e in sh_entries if e["uid"] in ("root", "0")]
+        + ["tweak %s (through Tweaks)" % t["id"] for t in tweaks],
         "system_writes": any(RULES[r][0] for f in flags for r in f["rules"]),
         "execute": execute,
     }
@@ -915,7 +951,7 @@ def labels(reps):
         for v in rep["versions"]:
             if v["status"] == "unchanged" or "review" not in v:
                 continue
-            if v["review"]["root_services"]:
+            if v["review"].get("root") or v["review"]["root_services"]:
                 out.add("root")
             if v["review"]["system_writes"]:
                 out.add("system-writes")
@@ -947,9 +983,18 @@ def describe(v):
     for s in r["services"]:
         out.append("- runs the service %s as uid %s%s" % (code(s["name"]), code(s["uid"]),
                                                           ", mode " + code(s["mode"]) if s["mode"] else ""))
-    if not r["apps"] and not r["services"]:
+    for h in r.get("hooks", []):
+        out.append("- runs the %s hook %s as root" % (h["hook"], code(h["path"])))
+    for e in r.get("sh_entries", []):
+        out.append("- has the script %s, run from NEMESIS as uid %s" % (code(e["path"]), code(e["uid"])))
+    for t in r.get("tweaks", []):
+        out.append("- adds the tweak %s (%s%s%s)" % (code(t["id"]), t["kind"] or "kind?",
+                                                    ", changes the system" if t["risk"] == "system" else "",
+                                                    ", retired" if t["retired"] else ""))
+    if not (r["apps"] or r["services"] or r.get("hooks") or r.get("sh_entries") or r.get("tweaks")):
         out.append("- installs no apps or services")
-    out.append("- runs as root: %s" % (", ".join(code(n) for n in r["root_services"]) or "nothing"))
+    root = r.get("root", ["service " + n for n in r["root_services"]])
+    out.append("- runs as root: %s" % (", ".join(code(n) for n in root) or "nothing"))
     out.append("- writes to the system: **%s**" % ("yes" if r["system_writes"] else "no"))
     if r["execute"]:
         out.append("- **type=execute** (USB autorun): refused by the store")
