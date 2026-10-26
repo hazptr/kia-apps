@@ -1,8 +1,8 @@
 {
   "format": 1,
-  "sequence": 12,
-  "generated": "2026-10-26T01:27:41Z",
-  "expires": "2027-01-24T01:27:41Z",
+  "sequence": 13,
+  "generated": "2026-10-26T01:33:14Z",
+  "expires": "2027-01-24T01:33:14Z",
   "key_id": "kia-apps-2026a",
   "apps": [
     {
@@ -29,19 +29,19 @@
           "requires": [],
           "notes": "Fixes Edit Menu closing with an error when you press Back.",
           "review": {
-            "types": [
-              "application"
-            ],
             "apps": [
               {
                 "package": "dev.kiamenu.editor",
                 "version_code": 7
               }
             ],
-            "services": [],
+            "execute": false,
             "root_services": [],
+            "services": [],
             "system_writes": false,
-            "execute": false
+            "types": [
+              "application"
+            ]
           }
         },
         {
@@ -273,6 +273,40 @@
               "application",
               "service"
             ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "tweaks.adb",
+      "name": "ADB over Wi-Fi",
+      "summary": "Lets a computer on the car's Wi-Fi control the head unit",
+      "description": "Adds a switch to Tweaks for ADB over the car's Wi-Fi, kept in step with Engineering Mode's ADB switch. Warning: there is no password, so anyone on the car's Wi-Fi can control the head unit. Needs Tweaks.",
+      "author": "hazptr",
+      "homepage": "https://github.com/cabinwright/tweaks-adb",
+      "category": "tools",
+      "versions": [
+        {
+          "version": "1.0",
+          "url": "https://github.com/cabinwright/tweaks-adb/releases/download/v1.0/tweaks.adb-v1.0.zip",
+          "sha256": "35099777c33b12673a687a09547adccc0b66b0e19d674697a8b9bbda245401cd",
+          "size": 6698,
+          "firmware": [
+            "CVEV.USA.0000.V015.012.260507"
+          ],
+          "requires": [
+            "kia.tweaks>=1.2"
+          ],
+          "notes": "First release. Replaces the TCP ADB package.",
+          "review": {
+            "types": [
+              "application"
+            ],
+            "apps": [],
+            "services": [],
+            "root_services": [],
+            "system_writes": true,
+            "execute": false
           }
         }
       ]

@@ -1,0 +1,134 @@
+{
+ "flags": [
+  {
+   "file": "tweaks/adb-wifi/enable.sh",
+   "line": 15,
+   "rules": [
+    "setprop"
+   ],
+   "text": "setprop $PORT 5555"
+  },
+  {
+   "file": "tweaks/adb-wifi/enable.sh",
+   "line": 20,
+   "rules": [
+    "remount"
+   ],
+   "text": "$NEMESIS remount rw >/dev/null 2>&1 || fail \"remount /system rw\""
+  },
+  {
+   "file": "tweaks/adb-wifi/enable.sh",
+   "line": 23,
+   "rules": [
+    "remount"
+   ],
+   "text": "$NEMESIS remount ro >/dev/null 2>&1"
+  },
+  {
+   "file": "tweaks/adb-wifi/enable.sh",
+   "line": 32,
+   "rules": [
+    "setprop"
+   ],
+   "text": "setprop $EN 1"
+  },
+  {
+   "file": "tweaks/adb-wifi/disable.sh",
+   "line": 15,
+   "rules": [
+    "remount"
+   ],
+   "text": "$NEMESIS remount rw >/dev/null 2>&1 || fail \"remount /system rw\""
+  },
+  {
+   "file": "tweaks/adb-wifi/disable.sh",
+   "line": 17,
+   "rules": [
+    "perms-unknown"
+   ],
+   "text": "cp \"$B/build.prop.stock\" \"$BP.kt\" && chmod 644 \"$BP.kt\" && mv \"$BP.kt\" \"$BP\" || { rm -f \"$BP.kt\"; fail \"writing build.prop\"; }"
+  },
+  {
+   "file": "tweaks/adb-wifi/disable.sh",
+   "line": 23,
+   "rules": [
+    "remount"
+   ],
+   "text": "$NEMESIS remount rw >/dev/null 2>&1 || fail \"remount /system rw\""
+  },
+  {
+   "file": "tweaks/adb-wifi/disable.sh",
+   "line": 25,
+   "rules": [
+    "perms-unknown"
+   ],
+   "text": "cp \"$B/adb_hide.xml\" \"$HIDE.kt\" && chmod 644 \"$HIDE.kt\" && mv \"$HIDE.kt\" \"$HIDE\" || { rm -f \"$HIDE.kt\"; fail \"writing $HIDE\"; }"
+  },
+  {
+   "file": "tweaks/adb-wifi/disable.sh",
+   "line": 28,
+   "rules": [
+    "remount"
+   ],
+   "text": "$NEMESIS remount rw >/dev/null 2>&1 || fail \"remount /system rw\""
+  },
+  {
+   "file": "tweaks/adb-wifi/disable.sh",
+   "line": 32,
+   "rules": [
+    "remount"
+   ],
+   "text": "$NEMESIS remount ro >/dev/null 2>&1"
+  },
+  {
+   "file": "tweaks/adb-wifi/disable.sh",
+   "line": 37,
+   "rules": [
+    "setprop"
+   ],
+   "text": "[ \"$(getprop $EN)\" = 0 ] || setprop $EN 0"
+  },
+  {
+   "file": "tweaks/adb-wifi/common.sh",
+   "line": 42,
+   "rules": [
+    "remount"
+   ],
+   "text": "fail() { echo \"FAIL: $1\"; $NEMESIS remount ro >/dev/null 2>&1; exit 1; }"
+  },
+  {
+   "file": "tweaks/adb-wifi/common.sh",
+   "line": 66,
+   "rules": [
+    "perms-unknown"
+   ],
+   "text": "echo -n \"$2\" > \"$PROPS/.$1.kt\" && chmod 600 \"$PROPS/.$1.kt\" && mv \"$PROPS/.$1.kt\" \"$PROPS/$1\" \\"
+  },
+  {
+   "file": "tweaks/adb-wifi/common.sh",
+   "line": 71,
+   "rules": [
+    "perms-unknown"
+   ],
+   "text": "cp \"$2\" \"$PROPS/.$1.kt\" && chmod 600 \"$PROPS/.$1.kt\" && mv \"$PROPS/.$1.kt\" \"$PROPS/$1\" \\"
+  }
+ ],
+ "nemesis": {
+  "id": "tweaks.adb",
+  "version": "1.0"
+ },
+ "review": {
+  "apps": [],
+  "execute": false,
+  "root_services": [],
+  "services": [],
+  "system_writes": true,
+  "types": [
+   "application"
+  ]
+ },
+ "sha256": "35099777c33b12673a687a09547adccc0b66b0e19d674697a8b9bbda245401cd",
+ "size": 6698,
+ "tool": 1,
+ "warnings": []
+}
